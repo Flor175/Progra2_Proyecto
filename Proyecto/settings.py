@@ -25,7 +25,7 @@ SECRET_KEY = 's-mp_m5zqf2j2j))$xal-b6x345r#b(f5atvbx7j5k^@zjl%xj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['159.65.233.185', '127.0.0.1']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Perfiles',
+    'Archivos',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'Proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,10 +75,22 @@ WSGI_APPLICATION = 'Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+#if DEBUG:
+ #   DATABASES = {
+ #       'default': {
+ #           'ENGINE': 'django.db.backends.sqlite3',
+ #           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+ #       }
+ #   }
+#else:
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
+        'USER': 'admin',
+        'PASSWORD': 'progra2',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -103,9 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-gt'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Etc/GMT+6'
 
 USE_I18N = True
 
@@ -118,3 +132,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+LOGIN_URL = '/iniciar-sesion/'
+LOGOUT_URL = '/cerrar-sesion/'
+LOGIN_REDIRECT_URL = '/Inicio/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'loginproyecto2018@gmail.com'
+EMAIL_HOST_PASSWORD = 'hsxztmbomlqrwrmh'
+EMAIL_PORT = 587
+
+PASSWORD_RESET_TIMEOUT = 600
+
+MEDIA_URL = '/Archivos_Subidos/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Archivos_Subidos')
+
+if DEBUG:
+   STATICFILES_DIRS = [ 
+    os.path.join(BASE_DIR, "static"),
+    ("automatas", os.path.join(BASE_DIR, "Archivos/static")),
+]
+else:
+   STATIC_ROOT = os.path.join(BASE_DIR,'static')
